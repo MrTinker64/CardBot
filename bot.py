@@ -1,10 +1,12 @@
 # This example requires the 'message_content' intent.
 from secretkey import TOKEN
+import logging
 import discord
 
 intents = discord.Intents.default()
 intents.message_content = True
 
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 client = discord.Client(intents=intents)
 
 @client.event
@@ -19,4 +21,4 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
 
-client.run(TOKEN)
+client.run(TOKEN, log_handler=handler)
