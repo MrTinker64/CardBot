@@ -78,5 +78,14 @@ class HeartsGame():
         trick.clear
         count = 1
         return player_to_win_trick  
+    
+if  __name__ == "__main__":
+    game = HeartsGame([
+        "Alice",
+        "Bob",
+        "Charlie",
+        "David"
+    ])
+    game.run_game()
         
-    # of Spades
+# of Spades
