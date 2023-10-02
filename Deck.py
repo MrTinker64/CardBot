@@ -20,7 +20,8 @@ class Card:
             rank = 14
         else:
             rank = int(rank)
-            
+        
+        self.suit = suit
         for suit_enum in Suits:
             if suit_enum.name == suit:
                 suit = suit_enum

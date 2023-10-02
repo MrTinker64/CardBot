@@ -20,5 +20,7 @@ async def on_ready():
 async def card(ctx, rank, of, suit):
     card = Card(suit, rank)
     await ctx.send(card)
+    
+# TODO Send point values at end of round
 
 bot.run(TOKEN)

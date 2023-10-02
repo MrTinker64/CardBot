@@ -59,9 +59,7 @@ class HeartsGame():
         reordered_players = self.players[starting_index:] + self.players[:starting_index]
 
         for player in reordered_players:
-            # rank, of, suit = input(f"{player}, play a card: ").split()
-            played_card = random.choice(player.hand)
-            rank, suit = played_card.rank, played_card.suit
+            rank, of, suit = input(f"{player}, play a card: ").split()
             player.play_card(rank, suit)
             trick.append(Card(suit, rank))
             if count == 1:
