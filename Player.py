@@ -10,21 +10,6 @@ class Player:
         self.hand += cards
         
     def play_card(self, rank, suit):
-        if rank == "Jack":
-            rank = 11
-        elif rank == "Queen":
-            rank = 12
-        elif rank == "King":
-            rank = 13
-        elif rank == "Ace":
-            rank = 14
-        else:
-            rank = int(rank)
-            
-        for suit_enum in Suits:
-            if suit_enum.name == suit:
-                suit = suit_enum
-                
         card = Card(suit, rank)
         for card_in_hand in self.hand:
             if card.__dict__ == card_in_hand.__dict__:
