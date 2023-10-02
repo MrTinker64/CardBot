@@ -1,4 +1,4 @@
-from Deck import Deck, Card
+from Deck import Deck, Card, Suits
 import random
 
 from Player import Player
@@ -39,15 +39,15 @@ class HeartsGame():
 
     def count_points_for(self, player, trick):
         for card in trick:
-            if card.suit == "Hearts":
+            if card.suit == Suits.Hearts:
                 player.add_points(1)
-            if card.suit == "Spades" and card.rank == "Queen":
+            if card.suit == Suits.Spades and card.rank == 12:
                 player.add_points(13)
 
     def get_highest_card(self, trick, lead_suit):
-        highest_card_value = max(card.numrank for card in trick if card.suit == lead_suit)
+        highest_card_value = max(card.rank for card in trick if card.suit == lead_suit)
         for card in trick:
-            if card.numrank == highest_card_value:
+            if card.rank == highest_card_value:
                 return card
 
     def trick(self, starting_index):
@@ -62,7 +62,7 @@ class HeartsGame():
             # rank, of, suit = input(f"{player}, play a card: ").split()
             played_card = random.choice(player.hand)
             rank, suit = played_card.rank, played_card.suit
-            player.play_card(Card(suit, rank))
+            player.play_card(rank, suit)
             trick.append(Card(suit, rank))
             if count == 1:
                 lead_suit = suit

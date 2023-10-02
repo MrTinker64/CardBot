@@ -1,26 +1,34 @@
+from enum import Enum
 import random
 
+
+class Suits(Enum):
+    Spades = 1
+    Hearts = 2
+    Diamonds = 3
+    Clubs = 4
+  
 class Card:
     def __init__(self, suit, rank):
         self.suit = suit
         self.rank = rank
-        if rank == "Ace":
-            self.numrank = 14
-        elif rank == "King":
-            self.numrank = 13
-        elif rank == "Queen":
-            self.numrank = 12
-        elif rank == "Jack":
-            self.numrank = 11
+        if rank == 11:
+            self.strrank = "Jack"
+        elif rank == 12:
+            self.strrank = "Queen"
+        elif rank == 13:
+            self.strrank = "King"
+        elif rank == 14:
+            self.strrank = "Ace"
         else:
-            self.numrank = int(rank)
+            self.strrank = f"{rank}"
 
     def __repr__(self):
-        return f"{self.rank} of {self.suit}"
+        return f"{self.strrank} of {self.suit.name}"
 
 class Deck:
-    SUITS = ["Clubs", "Diamonds", "Hearts", "Spades"]
-    RANKS = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+    SUITS = [Suits.Spades, Suits.Hearts, Suits.Diamonds, Suits.Clubs]
+    RANKS = [2, 3, 4 ,5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
     def __init__(self):
         self.cards = [Card(suit, rank) for suit in self.SUITS for rank in self.RANKS]
@@ -46,10 +54,6 @@ class Deck:
 
 if __name__ == "__main__":
     # Example usage:
-    card = Card("Spades", "Ace")
-    rank, of, suit = input("Card: ").split()
-    card2 = Card(suit, rank)
-    if card.__dict__ == card2.__dict__:
-        print("Yay!")
-    else:
-        print("Boo :(")
+    deck = Deck()
+    card = deck.draw(13)
+    print(card)

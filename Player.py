@@ -1,4 +1,4 @@
-from Deck import Deck, Card
+from Deck import Deck, Card, Suits
 
 class Player:
     def __init__(self, name):
@@ -9,7 +9,23 @@ class Player:
     def receive_cards(self, cards):
         self.hand += cards
         
-    def play_card(self, card):
+    def play_card(self, rank, suit):
+        if rank == "Jack":
+            rank = 11
+        elif rank == "Queen":
+            rank = 12
+        elif rank == "King":
+            rank = 13
+        elif rank == "Ace":
+            rank = 14
+        else:
+            rank = int(rank)
+            
+        for suit_enum in Suits:
+            if suit_enum.name == suit:
+                suit = suit_enum
+                
+        card = Card(suit, rank)
         for card_in_hand in self.hand:
             if card.__dict__ == card_in_hand.__dict__:
                 self.hand.remove(card_in_hand)
@@ -33,8 +49,5 @@ if __name__ == "__main__":
     player1.sort_hand()
     
     rank, of, suit = input(f"{player1}, play a card: ").split()
-    print(f"-{rank}-")
-    print(f"-{of}-")
-    print(f"-{suit}-")
-    player1.play_card(Card(suit, rank))
+    player1.play_card(rank, suit)
     
