@@ -11,6 +11,7 @@ class HeartsBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
+        self.game = "_"
         
         super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
 
@@ -26,24 +27,39 @@ class HeartsBot(commands.Bot):
             await ctx.send(card)
             
         @self.command()
-        async def hearts(ctx, p1, p2, p3, p4):
-            game = HeartsGame([p1, p2, p3, p4])
-            game.run_game()
+        async def hearts(ctx):
+            self.game = SimpleGame()
+            self.game.start_game()
             await ctx.send("Game started!")
             
         @self.command()
         async def play(ctx, rank, of, suit):
-            p1 = Player("Alice")
-            deck = Deck()
-            p1.receive_cards(deck.draw(1))
-            await ctx.send(f"{p1.name} played: {p1.play_card(rank, suit)}")
+            await ctx.send(f"{self.game.player.name} played: {self.game.player.play_card(rank, suit)}")
             
         @self.command()
-        async def hand(ctx):
-            p1 = Player("Alice")
-            deck = Deck()
-            p1.receive_cards(deck.draw(1))
-            await ctx.send(f"{p1}")
+        async def print_player(ctx):
+            await ctx.send(f"{self.game.player}")
+            
+        @self.command()
+        async def print_game(ctx):
+             print(f"{self.game}")
+             await ctx.send(f"{self.game}")
+
+class SimpleGame():
+    def __init__(self):
+        self.player = Player("Alice")
+        self.deck = Deck()
+        
+    def start_game(self):
+        self.deck.shuffle()
+
+        self.player.receive_cards(self.deck.draw(13))
+        self.player.sort_hand()
+    
+    def __repr__(self):
+        return "Simple Game"
+
+# TODO keep working on shifting methods over from HeartsGame to HeartsBot
 
 bot = HeartsBot()
 
