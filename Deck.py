@@ -66,7 +66,7 @@ class Deck:
         return drawnCards
 
     def __repr__(self):
-        return f"Deck({self.cards})"
+        return f"Deck: {self.cards}"
 
 if __name__ == "__main__":
     # Example usage:
