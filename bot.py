@@ -44,8 +44,8 @@ class HeartsBot(commands.Bot):
         @self.command()
         async def play(ctx: commands.Context, rank, of, suit):
             player = self.game.players[self.count]
+            await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
-            await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}, Count = {self.count}")
             self.trick.append(Card(suit, rank))
             if self.count >= 4:
                 self.count = 0
