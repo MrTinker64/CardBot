@@ -75,8 +75,6 @@ class SimpleGame():
     def __repr__(self):
         return "Simple Game"
 
-# TODO keep working on shifting methods over from HeartsGame to HeartsBot
-
 bot = HeartsBot()
 
 bot.run(TOKEN)
