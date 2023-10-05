@@ -10,24 +10,27 @@ class Suits(Enum):
   
 class Card:
     def __init__(self, suit, rank):
-        if rank == "Jack":
-            rank = 11
-        elif rank == "Queen":
-            rank = 12
-        elif rank == "King":
-            rank = 13
-        elif rank == "Ace":
-            rank = 14
-        else:
-            rank = int(rank)
+        if type(rank) == str:
+            rank.lower
+            if rank == "jack":
+                rank = 11
+            elif rank == "queen":
+                rank = 12
+            elif rank == "king":
+                rank = 13
+            elif rank == "ace":
+                rank = 14
+            else:
+                rank = int(rank)
         
-        self.suit = suit
-        for suit_enum in Suits:
-            if suit_enum.name == suit:
-                suit = suit_enum
+        if type(suit) == str:
+            for suit_enum in Suits:
+                if suit_enum.name == suit.lower:
+                    suit = suit_enum
                 
         self.suit = suit
         self.rank = rank
+        
         if rank == 11:
             self.strrank = "Jack"
         elif rank == 12:
