@@ -11,10 +11,11 @@ class HeartsBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
-        self.game = "_"
+        self.game = HeartsGame(["", "", "", ""])
         self.count = 0
         self.trick = []
         self.hearts = HeartsFunctions()
+        self.starting_player = Player("")
         
         super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
 
