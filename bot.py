@@ -30,8 +30,10 @@ class HeartsBot(commands.Bot):
             await ctx.send(card)
             
         @self.command()
-        async def hearts(ctx: commands.Context, p1, p2, p3, p4):
-            self.game = SimpleGame([p1, p2, p3, p4])
+        async def hearts(ctx: commands.Context, p2: discord.User):
+            p1 = ctx.author.display_name
+            p2 = p2.display_name
+            self.game = SimpleGame([p1, p2])
             self.game.start_game()
             await ctx.send("Game started!")
             
@@ -59,9 +61,7 @@ class SimpleGame():
     def __init__(self, player_names):
         self.players = [
             Player(player_names[0]),
-            Player(player_names[1]),
-            Player(player_names[2]),
-            Player(player_names[3]),
+            Player(player_names[1])
         ]
         self.deck = Deck()
         
