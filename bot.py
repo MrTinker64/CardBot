@@ -1,5 +1,6 @@
 # This example requires the 'members' and 'message_content' privileged intents to function.
 
+from typing import List
 import discord
 from discord.ext import commands
 from Deck import Card, Deck, Suits
@@ -32,11 +33,8 @@ class HeartsBot(commands.Bot):
             
         @self.command()
         async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User):
-            p1 = ctx.author.display_name
-            p2 = p2.display_name
-            p3 = p3.display_name
-            p4 = p4.display_name
-            self.game = HeartsGame([p1, p2, p3, p4])
+            p1 = ctx.author
+            self.game = HeartsGame(p1, p2, p3, p4)
             self.game.start_game()
             await ctx.send("Game started!")
             
@@ -67,12 +65,12 @@ class HeartsBot(commands.Bot):
              await ctx.send(f"{self.game}")
 
 class HeartsGame():
-    def __init__(self, player_names):
+    def __init__(self, p1: discord.User, p2: discord.User, p3: discord.User, p4: discord.User):
         self.players = [
-            Player(player_names[0]),
-            Player(player_names[1]),
-            Player(player_names[2]),
-            Player(player_names[3])
+            Player(p1.display_name),
+            Player(p2.display_name),
+            Player(p3.display_name),
+            Player(p4.display_name)
         ]
         self.deck = Deck()
         
