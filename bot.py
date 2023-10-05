@@ -25,18 +25,18 @@ class HeartsBot(commands.Bot):
 
 
         @self.command()
-        async def card(ctx, rank, of, suit):
+        async def card(ctx: commands.Context, rank, of, suit):
             card = Card(suit, rank)
             await ctx.send(card)
             
         @self.command()
-        async def hearts(ctx, p1, p2, p3, p4):
+        async def hearts(ctx: commands.Context, p1, p2, p3, p4):
             self.game = SimpleGame([p1, p2, p3, p4])
             self.game.start_game()
             await ctx.send("Game started!")
             
         @self.command()
-        async def play(ctx, rank, of, suit):
+        async def play(ctx: commands.Context, rank, of, suit):
             player = self.game.players[self.count]
             self.count += 1
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}, Count = {self.count}")
@@ -47,11 +47,11 @@ class HeartsBot(commands.Bot):
                 
             
         @self.command()
-        async def print_player(ctx):
+        async def print_player(ctx: commands.Context):
             await ctx.send(f"{self.game.players[self.count]}")
             
         @self.command()
-        async def print_game(ctx):
+        async def print_game(ctx: commands.Context):
              print(f"{self.game}")
              await ctx.send(f"{self.game}")
 
