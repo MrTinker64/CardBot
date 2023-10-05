@@ -35,10 +35,10 @@ class HeartsBot(commands.Bot):
         async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User):
             p1 = ctx.author
             self.game = HeartsGame(p1, p2, p3, p4)
-            self.game.start_game()
+            self.starting_player = self.game.start_game()
             await ctx.send("Game started!")
             
-            # TODO Keep working on switching to actual users from fake players
+            # TODO Implement specific rules (ie 2 of Clubs starts)
             
         @self.command()
         async def play(ctx: commands.Context, rank, of, suit):
@@ -75,11 +75,17 @@ class HeartsGame():
         self.deck = Deck()
         
     def start_game(self):
+        starting_player = self.players[0]
         # self.deck.shuffle()
 
         for player in self.players:
             player.receive_cards(self.deck.draw(13))
             player.sort_hand()
+            for card in player.hand:
+                if card.suit == Suits.Clubs and card.rank == 2:
+                    starting_player == player
+       
+        return starting_player
     
     def __repr__(self):
         return "Simple Game"
