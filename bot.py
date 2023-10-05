@@ -37,6 +37,8 @@ class HeartsBot(commands.Bot):
             self.game.start_game()
             await ctx.send("Game started!")
             
+            # TODO Keep working on switching to actual users from fake players
+            
         @self.command()
         async def play(ctx: commands.Context, rank, of, suit):
             player = self.game.players[self.count]
@@ -49,8 +51,12 @@ class HeartsBot(commands.Bot):
                 
             
         @self.command()
-        async def print_player(ctx: commands.Context):
-            await ctx.send(f"{self.game.players[self.count]}")
+        async def hand(ctx: commands.Context):
+            for player in self.game.players:
+                if player.name == ctx.author.display_name:
+                    user = player
+            dm = await bot.create_dm(ctx.author)
+            await dm.send(f"{user}")
             
         @self.command()
         async def print_game(ctx: commands.Context):
