@@ -64,6 +64,7 @@ class HeartsBot(commands.Bot):
             if self.count >= 2:
                 self.count = 0
                 await ctx.send(self.hearts.end_trick(self.trick, self.players))
+                self.trick.clear()
                 
             
         @self.command()
