@@ -38,3 +38,12 @@ class HeartsFunctions():
     def reorder_players(starting_player: Player, players: list):
         starting_index = players.index(starting_player)
         return players[starting_index:] + players[:starting_index]
+    
+if __name__ == "__main__":
+    players = [
+        Player("1", ""),
+        Player("2", "")
+    ]
+    reordered_players = HeartsFunctions.reorder_players(players[0], players)
+    for player in reordered_players:
+        print(player.name)
