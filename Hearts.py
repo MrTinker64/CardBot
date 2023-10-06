@@ -7,7 +7,7 @@ class HeartsFunctions():
     def __init__(self):
         pass
         
-    def end_trick(self, trick, players):
+    def end_trick(self, trick: list, players: list):
         lead_suit = trick[0].suit
         suited_trick = self.check_suit(trick, lead_suit)
         highest_card = self.get_highest_card(suited_trick, lead_suit)
@@ -15,26 +15,26 @@ class HeartsFunctions():
         self.count_points_for(player_who_won_trick, trick)
         return player_who_won_trick
 
-    def check_suit(self, cards, suit):
+    def check_suit(self, cards: list, suit: Suits):
         list = []
         for card in cards:
             if card.suit == suit:
                 list.append(card)
         return list
 
-    def count_points_for(self, player, trick):
+    def count_points_for(self, player: Player, trick: list):
         for card in trick:
             if card.suit == Suits.Hearts:
                 player.add_points(1)
             if card.suit == Suits.Spades and card.rank == 12:
                 player.add_points(13)
 
-    def get_highest_card(self, trick, lead_suit):
+    def get_highest_card(self, trick: list, lead_suit: Suits):
         highest_card_value = max(card.rank for card in trick if card.suit == lead_suit)
         for card in trick:
             if card.rank == highest_card_value:
                 return card 
             
-    def reorder_players(starting_player, players):
+    def reorder_players(starting_player: Player, players: list):
         starting_index = players.index(starting_player)
         return players[starting_index:] + players[:starting_index]
