@@ -42,7 +42,7 @@ class HeartsBot(commands.Bot):
             # TODO Implement specific rules (ie 2 of Clubs starts)
             
         @self.command()
-        async def play(ctx: commands.Context, rank, of, suit):
+        async def play(ctx: commands.Context, rank: str, of, suit: str):
             player = self.game.players[self.count]
             if ctx.author != player.user:
                 await ctx.send("It's not your turn!")
