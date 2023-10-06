@@ -1,10 +1,11 @@
 from Deck import Deck, Card, Suits
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, user):
         self.name = name
         self.hand = []  # This will hold the player's cards.
         self.points = 0
+        self.user = user
         
     def receive_cards(self, cards):
         self.hand += cards

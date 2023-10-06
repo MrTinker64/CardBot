@@ -69,8 +69,8 @@ class HeartsBot(commands.Bot):
 class HeartsGame():
     def __init__(self, p1: discord.User, p2: discord.User):
         self.players = [
-            Player(p1.display_name),
-            Player(p2.display_name)
+            Player(p1.display_name, p1),
+            Player(p2.display_name, p2)
         ]
         self.deck = Deck()
         
