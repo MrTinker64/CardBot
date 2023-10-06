@@ -63,8 +63,10 @@ class HeartsBot(commands.Bot):
             self.trick.append(Card(suit, rank))
             if self.count >= 2:
                 self.count = 0
-                await ctx.send(self.hearts.end_trick(self.trick, self.players))
+                player_who_won_trick = self.hearts.end_trick(self.trick, self.players)
+                await ctx.send(f"{player_who_won_trick.name}, {player_who_won_trick.points} points won the trick.")
                 self.trick.clear()
+                self.players = HeartsFunctions.reorder_players(player_who_won_trick, self.players)
                 
             
         @self.command()

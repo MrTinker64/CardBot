@@ -13,7 +13,7 @@ class HeartsFunctions():
         highest_card = self.get_highest_card(suited_trick, lead_suit)
         player_who_won_trick = players[trick.index(highest_card)]
         self.count_points_for(player_who_won_trick, trick)
-        return f"{player_who_won_trick.name}, {player_who_won_trick.points} points won the trick."
+        return player_who_won_trick
 
     def check_suit(self, cards, suit):
         list = []
