@@ -31,9 +31,9 @@ class HeartsBot(commands.Bot):
             await ctx.send("Yay!")
             
         @self.command()
-        async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User):
+        async def hearts(ctx: commands.Context, p2: discord.User):
             p1 = ctx.author
-            self.game = HeartsGame(p1, p2, p3, p4)
+            self.game = HeartsGame(p1, p2)
             self.starting_player = self.game.start_game()
             await ctx.send("Game started!")
             
@@ -47,7 +47,7 @@ class HeartsBot(commands.Bot):
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
             self.trick.append(Card(suit, rank))
-            if self.count >= 4:
+            if self.count >= 42:
                 self.count = 0
                 await ctx.send(self.hearts.end_trick(self.trick, self.game.players))
                 
@@ -66,18 +66,16 @@ class HeartsBot(commands.Bot):
              await ctx.send(f"{self.game}")
 
 class HeartsGame():
-    def __init__(self, p1: discord.User, p2: discord.User, p3: discord.User, p4: discord.User):
+    def __init__(self, p1: discord.User, p2: discord.User):
         self.players = [
             Player(p1.display_name),
-            Player(p2.display_name),
-            Player(p3.display_name),
-            Player(p4.display_name)
+            Player(p2.display_name)
         ]
         self.deck = Deck()
         
     def start_game(self):
         starting_player = self.players[0]
-        # self.deck.shuffle()
+        self.deck.shuffle()
 
         for player in self.players:
             player.receive_cards(self.deck.draw(13))

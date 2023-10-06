@@ -49,7 +49,7 @@ class Card:
         return f"{self.strrank} of {self.suit.name}"
 
 class Deck:
-    SUITS = [Suits.Clubs, Suits.Diamonds, Suits.Hearts, Suits.Spades]
+    SUITS = [Suits.Clubs, Suits.Hearts]
     RANKS = [2, 3, 4 ,5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
     def __init__(self):
