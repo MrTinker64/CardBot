@@ -18,6 +18,7 @@ class HeartsBot(commands.Bot):
         self.hearts = HeartsFunctions()
         self.starting_player = Player("", "")
         self.first_move = True
+        self.players = []
         
         super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
 
@@ -36,18 +37,18 @@ class HeartsBot(commands.Bot):
             p1 = ctx.author
             self.game = HeartsGame(p1, p2)
             self.starting_player = self.game.start_game()
+            self.players = self.game.players
             self.first_move = True
             # await ctx.send("Game started!")
             for player in self.players:
                 if player.name == ctx.author.display_name:
-                    user = player
-            await ctx.send(f"{user}")
+                    await ctx.send(f"{player}")
             
-            # TODO Implement specific rules (ie 2 of Clubs starts)
+            # TODO Proper starting player
             
         @self.command()
         async def play(ctx: commands.Context, rank: str, of, suit: str):
-            player = self.game.players[self.count]
+            player = self.players[self.count]
             if ctx.author != player.user:
                 await ctx.send("It's not your turn!")
                 return
@@ -62,16 +63,15 @@ class HeartsBot(commands.Bot):
             self.trick.append(Card(suit, rank))
             if self.count >= 2:
                 self.count = 0
-                await ctx.send(self.hearts.end_trick(self.trick, self.game.players))
+                await ctx.send(self.hearts.end_trick(self.trick, self.players))
                 
             
         @self.command()
         async def hand(ctx: commands.Context):
-            for player in self.game.players:
+            for player in self.players:
                 if player.name == ctx.author.display_name:
-                    user = player
+                    await ctx.send(f"{player}")
             # dm = await bot.create_dm(ctx.author)
-            await ctx.send(f"{user}")
             
         @self.command()
         async def print_game(ctx: commands.Context):
