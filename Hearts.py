@@ -35,3 +35,7 @@ class HeartsFunctions():
         for card in trick:
             if card.rank == highest_card_value:
                 return card 
+            
+    def reorder_players(self, starting_player, players):
+        starting_index = players.index(starting_player)
+        return players[starting_index:] + players[:starting_index]
