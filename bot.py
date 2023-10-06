@@ -51,8 +51,8 @@ class HeartsBot(commands.Bot):
             if self.first_move == True:
                 if rank != "2" or lower_suit != "clubs":
                     await ctx.send("Must play 2 of Clubs!")
-                self.first_move == False
-                return
+                    return
+                self.first_move = False
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
             self.trick.append(Card(suit, rank))
