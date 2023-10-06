@@ -27,9 +27,8 @@ class HeartsBot(commands.Bot):
 
 
         @self.command()
-        async def card(ctx: commands.Context, rank, of, suit):
-            card = Card(suit, rank)
-            await ctx.send(card)
+        async def test(ctx: commands.Context):
+            await ctx.send("Yay!")
             
         @self.command()
         async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User):
