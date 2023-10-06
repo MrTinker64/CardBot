@@ -16,7 +16,7 @@ class HeartsBot(commands.Bot):
         self.count = 0
         self.trick = []
         self.hearts = HeartsFunctions()
-        self.starting_player = Player("")
+        self.starting_player = Player("", "")
         
         super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
 
@@ -42,7 +42,7 @@ class HeartsBot(commands.Bot):
         @self.command()
         async def play(ctx: commands.Context, rank, of, suit):
             player = self.game.players[self.count]
-            if ctx.author.display_name != player.name:
+            if ctx.author != player.user:
                 await ctx.send("It's not your turn!")
                 return
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
@@ -82,7 +82,7 @@ class HeartsGame():
             player.receive_cards(self.deck.draw(13))
             player.sort_hand()
             for card in player.hand:
-                if card.suit == Suits.Clubs and card.rank == 2:
+                if card.__dict__ == Card(Suits.Spades, 2).__dict__:
                     starting_player == player
        
         return starting_player
