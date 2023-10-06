@@ -8,13 +8,12 @@ class HeartsFunctions():
         pass
         
     def end_trick(self, trick, players):
-        # lead_suit = trick[0].suit
-        # suited_trick = self.check_suit(trick, lead_suit)
-        # highest_card = self.get_highest_card(suited_trick, lead_suit)
-        # player_to_win_trick = players[trick.index(highest_card)]
-        player_to_win_trick = players
-        self.count_points_for(player_to_win_trick, trick)
-        return f"{player_to_win_trick.name}, {player_to_win_trick.points} points won the trick."
+        lead_suit = trick[0].suit
+        suited_trick = self.check_suit(trick, lead_suit)
+        highest_card = self.get_highest_card(suited_trick, lead_suit)
+        player_who_won_trick = players[trick.index(highest_card)]
+        self.count_points_for(player_who_won_trick, trick)
+        return f"{player_who_won_trick.name}, {player_who_won_trick.points} points won the trick."
 
     def check_suit(self, cards, suit):
         list = []

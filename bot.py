@@ -12,7 +12,7 @@ class HeartsBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
-        self.game = HeartsGame(["", "", "", ""])
+        self.game = "_"
         self.count = 0
         self.trick = []
         self.hearts = HeartsFunctions()
@@ -49,7 +49,7 @@ class HeartsBot(commands.Bot):
             self.trick.append(Card(suit, rank))
             if self.count >= 4:
                 self.count = 0
-                await ctx.send(self.hearts.end_trick(self.trick, self.game.players[self.count]))
+                await ctx.send(self.hearts.end_trick(self.trick, self.game.players))
                 
             
         @self.command()
