@@ -42,6 +42,8 @@ class HeartsBot(commands.Bot):
         @self.command()
         async def play(ctx: commands.Context, rank, of, suit):
             player = self.game.players[self.count]
+            if ctx.author != player:
+                await ctx.send("It's not your turn!")
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
             self.trick.append(Card(suit, rank))
