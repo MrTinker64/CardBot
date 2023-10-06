@@ -47,7 +47,7 @@ class HeartsBot(commands.Bot):
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
             self.trick.append(Card(suit, rank))
-            if self.count >= 42:
+            if self.count >= 2:
                 self.count = 0
                 await ctx.send(self.hearts.end_trick(self.trick, self.game.players))
                 
