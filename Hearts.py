@@ -15,7 +15,7 @@ class HeartsFunctions():
         self.count_points_for(player_who_won_trick, trick)
         return player_who_won_trick
 
-    def check_suit(self, cards: list, suit: Suits):
+    def check_suit(cards: list, suit: Suits):
         list = []
         for card in cards:
             if card.suit == suit:
