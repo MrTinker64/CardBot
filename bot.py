@@ -45,6 +45,12 @@ class HeartsBot(commands.Bot):
             if ctx.author != player.user:
                 await ctx.send("It's not your turn!")
                 return
+            lower_suit = suit.lower()
+            if self.first_move == True:
+                if rank != "2" or lower_suit != "clubs":
+                    await ctx.send("Must play 2 of Clubs!")
+                self.first_move == False
+                return
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
             self.trick.append(Card(suit, rank))
