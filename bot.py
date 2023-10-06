@@ -58,8 +58,8 @@ class HeartsBot(commands.Bot):
             for player in self.game.players:
                 if player.name == ctx.author.display_name:
                     user = player
-            dm = await bot.create_dm(ctx.author)
-            await dm.send(f"{user}")
+            # dm = await bot.create_dm(ctx.author)
+            await ctx.send(f"{user}")
             
         @self.command()
         async def print_game(ctx: commands.Context):
