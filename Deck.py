@@ -12,7 +12,6 @@ class Card:
     def __init__(self, suit, rank):
         if type(rank) == str:
             low_rank = rank.lower()
-            print(low_rank)
             if low_rank == "jack":
                 rank = 11
             elif low_rank == "queen":
@@ -26,7 +25,6 @@ class Card:
         
         if type(suit) == str:
             low_suit = suit.lower().capitalize()
-            print(low_suit)
             for suit_enum in Suits:
                 if suit_enum.name == low_suit:
                     suit = suit_enum
