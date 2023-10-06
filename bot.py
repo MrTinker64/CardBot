@@ -37,7 +37,11 @@ class HeartsBot(commands.Bot):
             self.game = HeartsGame(p1, p2)
             self.starting_player = self.game.start_game()
             self.first_move = True
-            await ctx.send("Game started!")
+            # await ctx.send("Game started!")
+            for player in self.players:
+                if player.name == ctx.author.display_name:
+                    user = player
+            await ctx.send(f"{user}")
             
             # TODO Implement specific rules (ie 2 of Clubs starts)
             
