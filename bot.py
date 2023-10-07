@@ -20,6 +20,7 @@ class HeartsBot(commands.Bot):
         self.first_move = True
         self.players = []
         self.lead_suit = Suits.Clubs
+        self.end_score = 100
         
         super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
 
@@ -34,18 +35,20 @@ class HeartsBot(commands.Bot):
             await ctx.send("Yay!")
             
         @self.command()
-        async def hearts(ctx: commands.Context, p2: discord.User):
+        async def hearts(ctx: commands.Context, p2: discord.User, end_score):
             p1 = ctx.author
             self.game = HeartsGame(p1, p2)
-            self.starting_player = self.game.start_game()
-            self.players = HeartsFunctions.reorder_players(self.starting_player, self.game.players)
-            self.first_move = True
-            # await ctx.send("Game started!")
+            self.end_score = int(end_score)
+            await start_game(ctx)
             for player in self.players:
                 if player.name == ctx.author.display_name:
                     await ctx.send(f"{player}")
             
-            # TODO Playing on suit
+        async def start_game(ctx):
+            self.starting_player = self.game.start_game()
+            self.players = HeartsFunctions.reorder_players(self.starting_player, self.game.players)
+            self.first_move = True
+            await ctx.send("New round started!")
             
         @self.command()
         async def play(ctx: commands.Context, rank: str, of, suit: str):
@@ -71,9 +74,17 @@ class HeartsBot(commands.Bot):
             if self.count >= 2:
                 self.count = 0
                 player_who_won_trick = self.hearts.end_trick(self.trick, self.players)
-                await ctx.send(f"{player_who_won_trick.name}, {player_who_won_trick.points} points won the trick.")
+                await ctx.send(f"{player_who_won_trick.name}, {player_who_won_trick.score} points won the trick.")
                 self.trick.clear()
                 self.players = HeartsFunctions.reorder_players(player_who_won_trick, self.players)
+                if len(self.players[0].hand) == 0:
+                    for player in self.players:
+                        if player.score >= self.end_score:
+                            await ctx.send(f"""Game over! Here are the scores:\n
+                                                    {self.players[0].name}: {self.players[0].score}\n
+                                                    {self.players[1].name}: {self.players[1].score}\n""")
+                            return
+                    await start_game(ctx)
                 
             
         @self.command()

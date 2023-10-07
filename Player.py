@@ -4,7 +4,7 @@ class Player:
     def __init__(self, name, user):
         self.name = name
         self.hand = []  # This will hold the player's cards.
-        self.points = 0
+        self.score = 0
         self.user = user
         
     def receive_cards(self, cards):
@@ -23,7 +23,7 @@ class Player:
         self.hand.sort(key=lambda card: (Deck.SUITS.index(card.suit), Deck.RANKS.index(card.rank)), reverse=True)
                 
     def add_points(self, points):
-        self.points += points
+        self.score += points
         
     def check_for_suit(self, suit: Suits):
         for card in self.hand:
@@ -32,7 +32,7 @@ class Player:
         return False
         
     def __repr__(self):
-        return f"{self.name}, {self.points} points: {self.hand}"
+        return f"{self.name}, {self.score} points: {self.hand}"
     
 if __name__ == "__main__":
     deck = Deck()
