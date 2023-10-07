@@ -34,7 +34,7 @@ class HeartsBot(commands.Bot):
             await ctx.send("Yay!")
             
         @self.command()
-        async def hearts(ctx: commands.Context, p2: discord.User, end_score):
+        async def hearts(ctx: commands.Context, p2: discord.User, end_score=100):
             p1 = ctx.author
             self.game = HeartsGame(p1, p2)
             self.end_score = int(end_score)
