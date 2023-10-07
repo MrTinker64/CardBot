@@ -11,22 +11,22 @@ class Suits(Enum):
 class Card:
     def __init__(self, suit, rank):
         if type(rank) == str:
-            low_rank = rank.lower()
-            if low_rank == "jack":
+            cap_rank = rank.capitalize()
+            if cap_rank == "Jack":
                 rank = 11
-            elif low_rank == "queen":
+            elif cap_rank == "Queen":
                 rank = 12
-            elif low_rank == "king":
+            elif cap_rank == "King":
                 rank = 13
-            elif low_rank == "ace":
+            elif cap_rank == "Ace":
                 rank = 14
             else:
                 rank = int(rank)
         
         if type(suit) == str:
-            low_suit = suit.lower().capitalize()
+            cap_suit = suit.capitalize()
             for suit_enum in Suits:
-                if suit_enum.name == low_suit:
+                if suit_enum.name == cap_suit:
                     suit = suit_enum
                 
         self.suit = suit

@@ -52,9 +52,9 @@ class HeartsBot(commands.Bot):
             if ctx.author != player.user:
                 await ctx.send("It's not your turn!")
                 return
-            lower_suit = suit.lower()
+            cap_suit = suit.capitalize()
             if self.first_move == True:
-                if rank != "2" or lower_suit != "clubs":
+                if rank != "2" or cap_suit != "Clubs":
                     await ctx.send("Must play 2 of Clubs!")
                     return
                 self.first_move = False
