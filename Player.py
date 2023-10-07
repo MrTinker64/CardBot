@@ -25,6 +25,12 @@ class Player:
     def add_points(self, points):
         self.points += points
         
+    def check_for_suit(self, suit: Suits):
+        for card in self.hand:
+            if card.suit == suit:
+                return True
+        return False
+        
     def __repr__(self):
         return f"{self.name}, {self.points} points: {self.hand}"
     

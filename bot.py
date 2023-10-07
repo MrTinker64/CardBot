@@ -90,15 +90,17 @@ class HeartsGame():
         self.deck = Deck()
         
     def start_game(self):
+        print("-" * 20, "New game", "-" * 20)
         starting_player = self.players[0]
         self.deck.shuffle()
 
         for player in self.players:
             player.receive_cards(self.deck.draw(13))
             player.sort_hand()
-            for card in player.hand:
-                if card.__dict__ == Card(Suits.Spades, 2).__dict__:
-                    starting_player == player
+            list_of_clubs = HeartsFunctions.check_suit(player.hand, Suits.Clubs)
+            for card in list_of_clubs:
+                if card.rank == 2:
+                    starting_player = player
        
         return starting_player
     
