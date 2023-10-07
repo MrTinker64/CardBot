@@ -19,6 +19,7 @@ class HeartsBot(commands.Bot):
         self.starting_player = Player("", "")
         self.first_move = True
         self.players = []
+        self.lead_suit = Suits.Clubs
         
         super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
 
@@ -44,7 +45,7 @@ class HeartsBot(commands.Bot):
                 if player.name == ctx.author.display_name:
                     await ctx.send(f"{player}")
             
-            # TODO Proper starting player
+            # TODO Playing on suit
             
         @self.command()
         async def play(ctx: commands.Context, rank: str, of, suit: str):
@@ -58,6 +59,12 @@ class HeartsBot(commands.Bot):
                     await ctx.send("Must play 2 of Clubs!")
                     return
                 self.first_move = False
+            if self.count != 0:
+                if cap_suit != self.lead_suit.name:
+                    if player.check_for_suit(self.lead_suit) == True:
+                        await ctx.send("You must play on suit!")
+                        return
+
             await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
             self.count += 1
             self.trick.append(Card(suit, rank))
