@@ -34,9 +34,9 @@ class HeartsBot(commands.Bot):
             await ctx.send("Yay!")
             
         @self.command()
-        async def hearts(ctx: commands.Context, p2: discord.User, end_score=100):
+        async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User, end_score=100):
             p1 = ctx.author
-            self.game = HeartsGame(p1, p2)
+            self.game = HeartsGame(p1, p2, p3, p4)
             self.end_score = int(end_score)
             await start_game(ctx)
             for player in self.players:
@@ -66,11 +66,14 @@ class HeartsBot(commands.Bot):
                     if player.check_for_suit(self.lead_suit) == True:
                         await ctx.send("You must play on suit!")
                         return
-
-            await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
+            try:
+                await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
+            except ValueError:
+                await ctx.send(f"You don't have that card :|")
+                return
             self.count += 1
             self.trick.append(Card(suit, rank))
-            if self.count >= 2:
+            if self.count >= 4:
                 self.count = 0
                 player_who_won_trick = self.hearts.end_trick(self.trick, self.players)
                 await ctx.send(f"{player_who_won_trick.name}, {player_who_won_trick.score} points won the trick.")
@@ -99,16 +102,19 @@ class HeartsBot(commands.Bot):
              await ctx.send(f"{self.game}")
 
 class HeartsGame():
-    def __init__(self, p1: discord.User, p2: discord.User):
+    def __init__(self, p1: discord.User, p2: discord.User, p3: discord.User, p4: discord.User):
         self.players = [
             Player(p1.display_name, p1),
-            Player(p2.display_name, p2)
+            Player(p2.display_name, p2),
+            Player(p3.display_name, p3),
+            Player(p4.display_name, p4)
         ]
         self.deck = Deck()
         
     def start_game(self):
         print("-" * 20, "New game", "-" * 20)
         starting_player = self.players[0]
+        self.deck = Deck()
         self.deck.shuffle()
 
         for player in self.players:
