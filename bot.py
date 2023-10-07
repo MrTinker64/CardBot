@@ -1,6 +1,5 @@
 # This example requires the 'members' and 'message_content' privileged intents to function.
 
-from typing import List
 import discord
 from discord.ext import commands
 from Deck import Card, Deck, Suits
