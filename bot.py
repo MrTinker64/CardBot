@@ -37,7 +37,7 @@ class HeartsBot(commands.Bot):
             p1 = ctx.author
             self.game = HeartsGame(p1, p2)
             self.starting_player = self.game.start_game()
-            self.players = self.game.players
+            self.players = HeartsFunctions.reorder_players(self.starting_player, self.game.players)
             self.first_move = True
             # await ctx.send("Game started!")
             for player in self.players:
@@ -97,7 +97,8 @@ class HeartsGame():
         for player in self.players:
             player.receive_cards(self.deck.draw(13))
             player.sort_hand()
-            list_of_clubs = HeartsFunctions.check_suit(player.hand, Suits.Clubs)
+            hf = HeartsFunctions()
+            list_of_clubs = hf.check_suit(player.hand, Suits.Clubs)
             for card in list_of_clubs:
                 if card.rank == 2:
                     starting_player = player

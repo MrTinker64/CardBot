@@ -15,7 +15,7 @@ class HeartsFunctions():
         self.count_points_for(player_who_won_trick, trick)
         return player_who_won_trick
 
-    def check_suit(cards: list, suit: Suits):
+    def check_suit(self, cards: list, suit: Suits):
         list = []
         for card in cards:
             if card.suit == suit:
@@ -40,10 +40,11 @@ class HeartsFunctions():
         return players[starting_index:] + players[:starting_index]
     
 if __name__ == "__main__":
+    deck = Deck()
+    cards = deck.draw(13)
     players = [
-        Player("1", ""),
-        Player("2", "")
+        Player("Avi", ""),
+        Player("Ben", "")
     ]
-    reordered_players = HeartsFunctions.reorder_players(players[0], players)
-    for player in reordered_players:
-        print(player.name)
+    hf = HeartsFunctions
+    print(hf.end_trick(hf, cards, players))
