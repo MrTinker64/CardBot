@@ -39,14 +39,14 @@ class HeartsBot(commands.Bot):
             self.game = HeartsGame(p1, p2, p3, p4)
             self.end_score = int(end_score)
             await start_game(ctx)
-            for player in self.players:
-                if player.name == ctx.author.display_name:
-                    await ctx.send(f"{player}")
             
         async def start_game(ctx):
             self.starting_player = self.game.start_game()
             self.players = HeartsFunctions.reorder_players(self.starting_player, self.game.players)
             self.first_move = True
+            for player in self.players:
+                dm = await bot.create_dm(player.user)
+                await dm.send(f"{player}")
             await ctx.send("New round started!")
             
         @self.slash_command(name="play", description="Play a card when it's your turn")
@@ -93,8 +93,9 @@ class HeartsBot(commands.Bot):
         async def hand(ctx: commands.Context):
             for player in self.players:
                 if player.name == ctx.author.display_name:
-                    await ctx.send(f"{player}")
-            # dm = await bot.create_dm(ctx.author)
+                    user = player
+            dm = await bot.create_dm(ctx.author)
+            await dm.send(f"{user}")
             
         @self.command()
         async def print_game(ctx: commands.Context):
