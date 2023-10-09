@@ -21,7 +21,7 @@ class HeartsBot(commands.Bot):
         self.lead_suit = Suits.Clubs
         self.end_score = 100
         
-        super().__init__(command_prefix=commands.when_mentioned_or('!'), intents=intents)
+        super().__init__(command_prefix=commands.when_mentioned_or('/'), intents=intents)
 
         @self.event
         async def on_ready():
@@ -29,11 +29,11 @@ class HeartsBot(commands.Bot):
             print('------')
 
 
-        @self.command()
+        @self.slash_command(name="test")
         async def test(ctx: commands.Context):
             await ctx.send("Yay!")
             
-        @self.command()
+        @self.slash_command(name="hearts", description="Start a game of Hearts! Requires 3 other players")
         async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User, end_score=100):
             p1 = ctx.author
             self.game = HeartsGame(p1, p2, p3, p4)
@@ -49,8 +49,8 @@ class HeartsBot(commands.Bot):
             self.first_move = True
             await ctx.send("New round started!")
             
-        @self.command()
-        async def play(ctx: commands.Context, rank: str, of, suit: str):
+        @self.slash_command(name="play", description="Play a card when it's your turn")
+        async def play(ctx: commands.Context, rank: str, suit: str):
             player = self.players[self.count]
             if ctx.author != player.user:
                 await ctx.send("It's not your turn!")
@@ -89,7 +89,7 @@ class HeartsBot(commands.Bot):
                     await start_game(ctx)
                 
             
-        @self.command()
+        @self.slash_command(name="hand", description="Get your hand dmed to you")
         async def hand(ctx: commands.Context):
             for player in self.players:
                 if player.name == ctx.author.display_name:
