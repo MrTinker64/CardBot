@@ -31,7 +31,7 @@ class HeartsBot(commands.Bot):
 
         @self.slash_command(name="test")
         async def test(ctx: commands.Context):
-            await ctx.send("Yay!")
+            await ctx.respond("Yay!")
             
         @self.slash_command(name="hearts", description="Start a game of Hearts! Requires 3 other players")
         async def hearts(ctx: commands.Context, p2: discord.User, p3: discord.User, p4: discord.User, end_score=100):
@@ -47,42 +47,42 @@ class HeartsBot(commands.Bot):
             for player in self.players:
                 dm = await bot.create_dm(player.user)
                 await dm.send(f"{player}")
-            await ctx.send("New round started!")
+            await ctx.respond("New round started!")
             
         @self.slash_command(name="play", description="Play a card when it's your turn")
         async def play(ctx: commands.Context, rank: str, suit: str):
             player = self.players[self.count]
             if ctx.author != player.user:
-                await ctx.send("It's not your turn!")
+                await ctx.respond("It's not your turn!")
                 return
             cap_suit = suit.capitalize()
             if self.first_move == True:
                 if rank != "2" or cap_suit != "Clubs":
-                    await ctx.send("Must play 2 of Clubs!")
+                    await ctx.respond("Must play 2 of Clubs!")
                     return
                 self.first_move = False
             if self.count != 0:
                 if cap_suit != self.lead_suit.name:
                     if player.check_for_suit(self.lead_suit) == True:
-                        await ctx.send("You must play on suit!")
+                        await ctx.respond("You must play on suit!")
                         return
             try:
-                await ctx.send(f"{player.name} played: {player.play_card(rank, suit)}")
+                await ctx.respond(f"{player.name} played: {player.play_card(rank, suit)}")
             except ValueError:
-                await ctx.send(f"You don't have that card :|")
+                await ctx.respond(f"You don't have that card :|")
                 return
             self.count += 1
             self.trick.append(Card(suit, rank))
             if self.count >= 4:
                 self.count = 0
                 player_who_won_trick = self.hearts.end_trick(self.trick, self.players)
-                await ctx.send(f"{player_who_won_trick.name}, {player_who_won_trick.score} points won the trick.")
+                await ctx.respond(f"{player_who_won_trick.name}, {player_who_won_trick.score} points won the trick.")
                 self.trick.clear()
                 self.players = HeartsFunctions.reorder_players(player_who_won_trick, self.players)
                 if len(self.players[0].hand) == 0:
                     for player in self.players:
                         if player.score >= self.end_score:
-                            await ctx.send(f"""Game over! Here are the scores:\n
+                            await ctx.respond(f"""Game over! Here are the scores:\n
                                                     {self.players[0].name}: {self.players[0].score}\n
                                                     {self.players[1].name}: {self.players[1].score}\n""")
                             return
@@ -95,12 +95,12 @@ class HeartsBot(commands.Bot):
                 if player.name == ctx.author.display_name:
                     user = player
             dm = await bot.create_dm(ctx.author)
-            await dm.send(f"{user}")
+            await dm.respond(f"{user}")
             
         @self.command()
         async def print_game(ctx: commands.Context):
              print(f"{self.game}")
-             await ctx.send(f"{self.game}")
+             await ctx.respond(f"{self.game}")
 
 class HeartsGame():
     def __init__(self, p1: discord.User, p2: discord.User, p3: discord.User, p4: discord.User):
